@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import { Header } from "./Component/Header";
+import { Task } from "./Component/Task/Task";
 
 function App() {
+  const [tasks, setTasks] = useState(["Task 1", "Task 2", "Task 3"]);
+
+  const handleUpdateTask = (index, updatedTask) => {
+    const newTasks = [...tasks];
+    newTasks[index] = updatedTask;
+    setTasks(newTasks);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      <Header />
+      <div className="flex flex-wrap ">
+        {tasks.map((task, index) => (
+          <Task
+            key={index}
+            tasks={task}
+            setTasks={setTasks}
+            onUpdateTask={(updatedTask) =>
+              handleUpdateTask(tasks.index, updatedTask)
+            }
+          />
+        ))}
+      </div>
     </div>
   );
 }
